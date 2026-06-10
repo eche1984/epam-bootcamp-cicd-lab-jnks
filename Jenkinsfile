@@ -40,7 +40,7 @@ pipeline {
         
         stage('Build (npm install)') {
             steps {
-                sh 'npm install'
+                sh 'NODE_OPTIONS="--max-old-space-size=512" npm install'
             }
         }
         

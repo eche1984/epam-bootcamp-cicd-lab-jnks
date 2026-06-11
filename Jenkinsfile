@@ -10,7 +10,7 @@ pipeline {
         HOST_PORT = ''
         CONTAINER_NAME = ''
     }
-    
+     
     stages {
         stage('Checkout') {
             steps {

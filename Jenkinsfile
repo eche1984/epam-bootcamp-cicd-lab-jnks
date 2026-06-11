@@ -43,7 +43,7 @@ pipeline {
                 sh 'NODE_OPTIONS="--max-old-space-size=512" npm install'
             }
         }
-        
+         
         stage('Test') {
             steps {
                 sh 'CI=true npm test'
@@ -57,7 +57,7 @@ pipeline {
                 }
             }
         }
-        
+         
         stage('Push to Docker Hub') {
             steps {
                 script {
@@ -73,7 +73,7 @@ pipeline {
                 }
             }
         }
-        
+         
         stage('Trigger downstream') {
             steps {
                 script {

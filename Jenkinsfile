@@ -49,7 +49,7 @@ pipeline {
                 sh 'CI=true npm test'
             }
         }
-        
+         
         stage('Build Docker Image') {
             steps {
                 script {
@@ -73,7 +73,7 @@ pipeline {
                 }
             }
         }
-
+        
         stage('Trigger downstream') {
             steps {
                 script {
@@ -86,7 +86,7 @@ pipeline {
             }
         }
     }
-
+    
     post {
         always {
             cleanWs()

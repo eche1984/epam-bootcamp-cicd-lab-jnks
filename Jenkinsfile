@@ -17,7 +17,7 @@ pipeline {
                 checkout scm
             }
         }
-        
+         
         stage('Set environment variables') {
             steps {
                 script {

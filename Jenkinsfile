@@ -1,23 +1,23 @@
 pipeline {
     agent any
-    
+     
     tools {
         nodejs 'Node-7.8.0'
     }
-    
+     
     environment {
         DOCKER_IMAGE = ''
         HOST_PORT = ''
         CONTAINER_NAME = ''
     }
-    
+     
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-        
+         
         stage('Set environment variables') {
             steps {
                 script {

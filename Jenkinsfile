@@ -4,7 +4,7 @@ pipeline {
     tools {
         nodejs 'Node-7.8.0'
     }
-    
+     
     environment {
         DOCKER_IMAGE = ''
         HOST_PORT = ''

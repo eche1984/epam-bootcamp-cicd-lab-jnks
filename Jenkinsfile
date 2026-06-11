@@ -43,13 +43,13 @@ pipeline {
                 sh 'NODE_OPTIONS="--max-old-space-size=512" npm install'
             }
         }
-        
+         
         stage('Test') {
             steps {
                 sh 'CI=true npm test'
             }
         }
-        
+         
         stage('Build Docker Image') {
             steps {
                 script {
@@ -57,19 +57,31 @@ pipeline {
                 }
             }
         }
-        
-        stage('Deploy') {
+         
+        stage('Push to Docker Hub') {
             steps {
                 script {
-                    sh """
-                        docker stop ${CONTAINER_NAME} || true
-                        docker rm ${CONTAINER_NAME} || true
-                    """
-                    sh """
-                        docker run -d --name ${CONTAINER_NAME} \
-                        --expose ${HOST_PORT} -p ${HOST_PORT}:3000 \
-                        ${DOCKER_IMAGE}
-                    """
+                    def dockerHubRepo = "blackoctopus/epam-bootcamp-jnks-lab"
+                    def imageTag = "${DOCKER_IMAGE}" 
+                    def hubTag = imageTag.replace(':', '-')
+                    def hubImage = "${dockerHubRepo}:${hubTag}"
+                    sh "docker tag ${imageTag} ${hubImage}"
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        sh "echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin"
+                        sh "docker push ${hubImage}"
+                    }
+                }
+            }
+        }
+         
+        stage('Trigger downstream') {
+            steps {
+                script {
+                    if (env.BRANCH_NAME == 'main') {
+                        build job: 'Deploy_to_main', wait: false
+                    } else if (env.BRANCH_NAME == 'dev') {
+                        build job: 'Deploy_to_dev', wait: false
+                    }
                 }
             }
         }

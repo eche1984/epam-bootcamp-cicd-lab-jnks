@@ -62,7 +62,7 @@ pipeline {
             steps {
                 script {
                     def dockerHubRepo = "blackoctopus/epam-bootcamp-jnks-lab"
-                    def imageTag = "${DOCKER_IMAGE}"  // ej: nodemain:v1.0
+                    def imageTag = "${DOCKER_IMAGE}" 
                     def hubTag = imageTag.replace(':', '-')
                     def hubImage = "${dockerHubRepo}:${hubTag}"
                     sh "docker tag ${imageTag} ${hubImage}"

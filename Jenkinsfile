@@ -61,7 +61,23 @@ pipeline {
                 }
             }
         }
-         
+
+        stage('Trivy Security Scan') {
+            steps {
+                script {
+                    echo "Escaneando imagen ${DOCKER_IMAGE}:${IMAGE_TAG} con Trivy..."
+                    sh """
+                        trivy image \
+                            --severity CRITICAL \
+                            --exit-code 1 \
+                            --no-progress \
+                            ${DOCKER_IMAGE}:${IMAGE_TAG}
+                    """
+                    echo "✅ No se encontraron vulnerabilidades CRITICAL o HIGH"
+                }
+            }
+        }
+        
         stage('Push to Docker Hub') {
             steps {
                 script {

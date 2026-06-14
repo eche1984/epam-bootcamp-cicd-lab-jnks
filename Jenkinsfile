@@ -80,11 +80,11 @@ pipeline {
         stage('Trivy Security Scan') {
             steps {
                 script {
+                            // --exit-code 1 \
                     echo "Escaneando imagen ${DOCKER_IMAGE}:${IMAGE_TAG} con Trivy..."
                     sh """
                         trivy image \
                             --severity CRITICAL \
-                            // --exit-code 1 \
                             --exit-code 0 \
                             --no-progress \
                             ${DOCKER_IMAGE}:${IMAGE_TAG}

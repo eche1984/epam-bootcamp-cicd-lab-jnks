@@ -53,7 +53,22 @@ pipeline {
                 sh 'CI=true npm test'
             }
         }
-         
+        
+        stage('Hadolint Dockerfile Linter') {
+            steps {
+                script {
+                    echo "🔍 Linting Dockerfile con Hadolint..."
+                    sh """
+                        hadolint \
+                            --failure-threshold error \
+                            --format tty \
+                            Dockerfile
+                    """
+                    echo "✅ Dockerfile superó el linting sin errores"
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 script {

@@ -4,7 +4,7 @@ pipeline {
     agent {
         docker {
             image 'blackoctopus/epam-bootcamp-jnks-lab:jenkins-agent-node'
-            args '--user root -v /run/docker.sock:/var/run/docker.sock -w /workspace
+            args '--user root -v /run/docker.sock:/var/run/docker.sock -w /workspace 
             reuseNode false
             alwaysPull false
         }

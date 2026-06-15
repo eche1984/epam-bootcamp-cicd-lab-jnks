@@ -1,7 +1,13 @@
 @Library('cicd-shared-lib') _
 
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'blackoctopus/epam-bootcamp-jnks-lab:jenkins-agent-node'
+            args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+            reuseNode true
+        }
+    }
      
     tools {
         nodejs 'Node-7.8.0'

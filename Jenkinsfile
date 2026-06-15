@@ -1,7 +1,14 @@
 @Library('cicd-shared-lib') _
 
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'blackoctopus/epam-bootcamp-jnks-lab:jenkins-agent-node'
+            args '--user root -v /run/docker.sock:/var/run/docker.sock -w /workspace'
+            reuseNode false
+            alwaysPull false
+        }
+    }
      
     tools {
         nodejs 'Node-7.8.0'
@@ -35,7 +42,7 @@ pipeline {
                         error "Branch ${env.BRANCH_NAME} not supported"
                     }
                     IMAGE_TAG = 'v1.0'
-
+                    
                     echo "Building for branch ${env.BRANCH_NAME}"
                     echo "Docker image: ${DOCKER_IMAGE}:${IMAGE_TAG}, Host port: ${HOST_PORT}"
                 }

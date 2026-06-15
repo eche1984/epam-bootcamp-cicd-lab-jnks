@@ -1,0 +1,42 @@
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    xz-utils \
+    wget \
+    curl \
+    gnupg \
+    lsb-release \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -sL https://nodejs.org/dist/v7.8.0/node-v7.8.0-linux-x64.tar.xz | tar -xJ -C /usr/local --strip-components=1
+
+RUN node --version && npm --version
+
+RUN apt-get update && apt-get install -y docker.io && rm -rf /var/lib/apt/lists/*
+
+RUN wget -O /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64 \
+    && chmod +x /usr/local/bin/hadolint
+
+RUN wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | apt-key add - \
+    && echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | tee /etc/apt/sources.list.d/trivy.list \
+    && apt-get update \
+    && apt-get install -y trivy \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN echo "=== Verificando instalaciones ===" && \
+    node --version && \
+    npm --version && \
+    hadolint --version && \
+    trivy --version && \
+    docker --version
+
+WORKDIR /workspace
+
+CMD ["node", "--version"]
+
+RUN mkdir -p /var/lib/jenkins && chmod 777 /var/lib/jenkins
+

@@ -21,8 +21,6 @@ RUN apt-get update && apt-get install -y docker.io && rm -rf /var/lib/apt/lists/
 RUN wget -O /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64 \
     && chmod +x /usr/local/bin/hadolint
 
-RUN mkdir -p /var/lib/jenkins && chmod 777 /var/lib/jenkins
-
 RUN wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | apt-key add - \
     && echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | tee /etc/apt/sources.list.d/trivy.list \
     && apt-get update \
@@ -39,4 +37,6 @@ RUN echo "=== Verificando instalaciones ===" && \
 WORKDIR /workspace
 
 CMD ["node", "--version"]
+
+RUN mkdir -p /var/lib/jenkins && chmod 777 /var/lib/jenkins
 

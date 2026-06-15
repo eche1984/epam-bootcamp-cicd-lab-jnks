@@ -42,7 +42,7 @@ pipeline {
                         error "Branch ${env.BRANCH_NAME} not supported"
                     }
                     IMAGE_TAG = 'v1.0'
-
+                    
                     echo "Building for branch ${env.BRANCH_NAME}"
                     echo "Docker image: ${DOCKER_IMAGE}:${IMAGE_TAG}, Host port: ${HOST_PORT}"
                 }

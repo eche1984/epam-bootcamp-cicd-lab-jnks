@@ -41,15 +41,15 @@ and security scanning without relying on the host environment.
 - `Dockerfile` — application image definition (Node.js app)
 - `Dockerfile.agent` — custom Jenkins agent image with build/lint/scan tooling
 
+## Related project
+
+This pipeline consumes the [`epam-bootcamp-jnkns-shared-library`](https://github.com/eche1984/epam-bootcamp-jnkns-shared-library) 
+for its Docker Hub publishing step (`dockerUtils` function), centralizing image tagging and 
+authenticated registry push logic outside the main Jenkinsfile.
+
 ## Context
 
 Built as a practical exercise during the EPAM DevOps bootcamp, focused on implementing CI/CD 
 quality and security gates (linting + vulnerability scanning) alongside a branch-based 
 multi-environment deployment strategy — practices commonly expected in production-grade 
 Jenkins pipelines.
-
-## Related project
-
-This pipeline consumes the [`epam-bootcamp-jnkns-shared-library`](https://github.com/eche1984/epam-bootcamp-jnkns-shared-library) 
-for its Docker Hub publishing step (`dockerUtils` function), centralizing image tagging and 
-authenticated registry push logic outside the main Jenkinsfile.

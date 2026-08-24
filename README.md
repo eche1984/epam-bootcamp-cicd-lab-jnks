@@ -47,3 +47,9 @@ Built as a practical exercise during the EPAM DevOps bootcamp, focused on implem
 quality and security gates (linting + vulnerability scanning) alongside a branch-based 
 multi-environment deployment strategy — practices commonly expected in production-grade 
 Jenkins pipelines.
+
+## Related project
+
+This pipeline consumes the [`epam-bootcamp-jnkns-shared-library`](https://github.com/eche1984/epam-bootcamp-jnkns-shared-library) 
+for its Docker Hub publishing step (`dockerUtils` function), centralizing image tagging and 
+authenticated registry push logic outside the main Jenkinsfile.
